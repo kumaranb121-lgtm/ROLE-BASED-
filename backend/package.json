@@ -22,7 +22,7 @@
   "packageManager": "pnpm@11.24.0",
   "type": "module",
   "pnpm": {
-    "onlyBuiltDependencies": [
+    "approvedBuilds": [
       "argon2",
       "esbuild"
     ]
