@@ -1,0 +1,39 @@
+services:
+  - type: web
+    name: csbs-timetable-backend
+    env: node
+    region: oregon
+    buildCommand: cd backend && pnpm install && pnpm run build
+    startCommand: cd backend && pnpm run start
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: FRONTEND_URL
+        fromService:
+          type: static
+          name: csbs-timetable-frontend
+          envVar: RENDER_EXTERNAL_URL
+      # Ensure you set these values in your Render Dashboard:
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: VAPID_PUBLIC_KEY
+        sync: false
+      - key: VAPID_PRIVATE_KEY
+        sync: false
+
+  - type: static
+    name: csbs-timetable-frontend
+    region: oregon
+    buildCommand: cd frontend && pnpm install && pnpm run build
+    staticPublishPath: frontend/dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: csbs-timetable-backend
+          envVar: RENDER_EXTERNAL_URL
+      # Ensure you set this value in your Render Dashboard:
+      - key: VITE_VAPID_PUBLIC_KEY
+        sync: false

@@ -216,6 +216,9 @@ importers:
       '@fastify/rate-limit':
         specifier: ^11.2.0
         version: 11.2.0
+      '@types/node':
+        specifier: ^26.6.1
+        version: 26.6.1
       argon2:
         specifier: ^0.45.1
         version: 0.45.1
@@ -240,6 +243,9 @@ importers:
       socket.io:
         specifier: ^4.8.3
         version: 4.8.3(supports-color@5.5.0)
+      typescript:
+        specifier: ^7.0.2
+        version: 7.0.2
       web-push:
         specifier: ^3.6.7
         version: 3.6.7(supports-color@5.5.0)
@@ -250,9 +256,6 @@ importers:
       '@types/jsonwebtoken':
         specifier: ^9.0.10
         version: 9.0.10
-      '@types/node':
-        specifier: ^26.6.1
-        version: 26.6.1
       '@types/web-push':
         specifier: ^3.6.4
         version: 3.6.4
@@ -265,9 +268,6 @@ importers:
       tsx:
         specifier: ^4.23.13
         version: 4.23.13
-      typescript:
-        specifier: ^7.0.2
-        version: 7.0.2
 
 packages:
 
