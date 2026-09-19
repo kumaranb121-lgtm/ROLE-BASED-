@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 34 38% 97%; /* #F7F5F2 warm cream/white content area */
+    --foreground: 0 0% 20%; /* Dark text */
+    
+    --card: 0 0% 100%; /* White cards */
+    --card-foreground: 0 0% 20%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 20%;
+    
+    /* Primary: Maroon/Burgundy */
+    --primary: 350 43% 30%; /* #6d2b33 */
+    --primary-foreground: 0 0% 100%;
+    
+    /* Sidebar specific dark brown/maroon */
+    --sidebar-bg: 350 50% 25%;
+    
+    --secondary: 10 10% 90%;
+    --secondary-foreground: 0 0% 20%;
+    
+    --muted: 10 10% 90%;
+    --muted-foreground: 0 0% 40%;
+    
+    --accent: 350 43% 30%;
+    --accent-foreground: 0 0% 100%;
+    
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 350 43% 30%;
+    
+    --radius: 0.75rem; /* Rounded cards */
+  }
+
+  .dark {
+    /* Same theme for now as strictly instructed not to change look */
+    --background: 34 38% 97%; 
+    --foreground: 0 0% 20%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 20%;
+    --primary: 350 43% 30%;
+    --primary-foreground: 0 0% 100%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 350 43% 30%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
