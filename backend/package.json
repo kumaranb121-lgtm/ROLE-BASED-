@@ -21,6 +21,12 @@
   },
   "packageManager": "pnpm@11.24.0",
   "type": "module",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "argon2",
+      "esbuild"
+    ]
+  },
   "dependencies": {
     "@fastify/cors": "^11.3.0",
     "@fastify/helmet": "^13.1.1",
