@@ -18,7 +18,6 @@
   },
   "pnpm": {
     "approvedBuilds": [
-      "argon2",
       "esbuild"
     ]
   },
@@ -26,9 +25,9 @@
     "@fastify/cors": "^11.3.0",
     "@fastify/helmet": "^13.1.1",
     "@fastify/rate-limit": "^11.2.0",
-    "argon2": "^0.45.1",
     "dotenv": "^18.0.0",
     "fastify": "^5.12.5",
+    "hash-wasm": "^4.12.0",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.10.1",
     "pino": "^10.3.1",

@@ -4,7 +4,7 @@ services:
     env: node
     plan: free
     region: oregon
-    buildCommand: npm install -g pnpm@10.26.1 && cd backend && pnpm install --frozen-lockfile && pnpm rebuild argon2 && pnpm run build
+    buildCommand: npm install -g pnpm@10.26.1 && cd backend && pnpm install --frozen-lockfile && pnpm run build
     startCommand: cd backend && pnpm run start
     envVars:
       - key: PORT

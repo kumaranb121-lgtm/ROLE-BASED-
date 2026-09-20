@@ -1,5 +1,5 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
-import argon2 from 'argon2';
+import { verifyPassword } from '../utils/password.js';
 import jwt from 'jsonwebtoken';
 import { User } from '../models/User.js';
 
@@ -7,7 +7,7 @@ export const login = async (request: FastifyRequest, reply: FastifyReply) => {
   const { username, email, password } = request.body as any;
 
   if (!password || (!username && !email)) {
-    console.log('Login failed: missing fields', { username, email, password });
+    console.log('Login failed: missing username/email or password');
     return reply.code(400).send({ message: 'Username/Email and password are required' });
   }
 
@@ -23,7 +23,7 @@ export const login = async (request: FastifyRequest, reply: FastifyReply) => {
     return reply.code(401).send({ message: 'Invalid credentials' });
   }
 
-  const isValid = await argon2.verify(user.password, password);
+  const isValid = await verifyPassword(user.password, password);
   
   if (!isValid) {
     return reply.code(401).send({ message: 'Invalid credentials' });

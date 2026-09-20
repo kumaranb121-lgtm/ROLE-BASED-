@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import argon2 from 'argon2';
+import { hashPassword } from './utils/password.js';
 import dotenv from 'dotenv';
 import { User } from './models/User.js';
 import { Class } from './models/Class.js';
@@ -87,7 +87,7 @@ async function seed() {
   await connectDB();
   console.log('Seeding Database with intelligent staff allocator...');
   try {
-    const passwordHash = await argon2.hash('Password@123');
+    const passwordHash = await hashPassword('Password@123');
 
     // 1. Setup Users
     await User.findOneAndUpdate(
