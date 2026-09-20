@@ -4,7 +4,7 @@ services:
     env: node
     plan: free
     region: oregon
-    buildCommand: npm install -g pnpm && cd backend && pnpm install && pnpm run build
+    buildCommand: npm install -g pnpm@10.26.1 && cd backend && pnpm install --frozen-lockfile && pnpm run build
     startCommand: cd backend && pnpm run start
     envVars:
       - key: PORT
@@ -12,7 +12,7 @@ services:
       - key: FRONTEND_URL
         sync: false
       # Ensure you set these values in your Render Dashboard:
-      - key: MONGO_URI
+      - key: MONGODB_URI
         sync: false
       - key: JWT_SECRET
         sync: false
@@ -24,7 +24,7 @@ services:
   - type: web
     env: static
     name: csbs-timetable-frontend
-    buildCommand: npm install -g pnpm && cd frontend && pnpm install && pnpm run build
+    buildCommand: npm install -g pnpm@10.26.1 && cd frontend && pnpm install --frozen-lockfile && pnpm run build
     staticPublishPath: frontend/dist
     envVars:
       - key: VITE_API_URL
