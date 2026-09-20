@@ -9,10 +9,7 @@ services:
       - key: PORT
         value: 10000
       - key: FRONTEND_URL
-        fromService:
-          type: web
-          name: csbs-timetable-frontend
-          envVar: RENDER_EXTERNAL_URL
+        sync: false
       # Ensure you set these values in your Render Dashboard:
       - key: MONGO_URI
         sync: false
@@ -26,15 +23,11 @@ services:
   - type: web
     env: static
     name: csbs-timetable-frontend
-    region: oregon
     buildCommand: cd frontend && pnpm install && pnpm run build
     staticPublishPath: frontend/dist
     envVars:
       - key: VITE_API_URL
-        fromService:
-          type: web
-          name: csbs-timetable-backend
-          envVar: RENDER_EXTERNAL_URL
+        sync: false
       # Ensure you set this value in your Render Dashboard:
       - key: VITE_VAPID_PUBLIC_KEY
         sync: false
