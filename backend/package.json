@@ -13,6 +13,9 @@
   "author": "",
   "license": "ISC",
   "type": "module",
+  "engines": {
+    "node": "20.x"
+  },
   "pnpm": {
     "approvedBuilds": [
       "argon2",

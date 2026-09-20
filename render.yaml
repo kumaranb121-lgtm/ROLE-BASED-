@@ -4,11 +4,13 @@ services:
     env: node
     plan: free
     region: oregon
-    buildCommand: npm install -g pnpm@10.26.1 && cd backend && pnpm install --frozen-lockfile && pnpm run build
+    buildCommand: npm install -g pnpm@10.26.1 && cd backend && pnpm install --frozen-lockfile && pnpm rebuild argon2 && pnpm run build
     startCommand: cd backend && pnpm run start
     envVars:
       - key: PORT
         value: 10000
+      - key: NODE_VERSION
+        value: 20.19.0
       - key: FRONTEND_URL
         sync: false
       # Ensure you set these values in your Render Dashboard:
