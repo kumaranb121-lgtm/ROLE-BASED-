@@ -10,7 +10,7 @@ services:
         value: 10000
       - key: FRONTEND_URL
         fromService:
-          type: static
+          type: web
           name: csbs-timetable-frontend
           envVar: RENDER_EXTERNAL_URL
       # Ensure you set these values in your Render Dashboard:
@@ -23,7 +23,8 @@ services:
       - key: VAPID_PRIVATE_KEY
         sync: false
 
-  - type: static
+  - type: web
+    env: static
     name: csbs-timetable-frontend
     region: oregon
     buildCommand: cd frontend && pnpm install && pnpm run build
