@@ -4,13 +4,15 @@ services:
     env: node
     plan: free
     region: oregon
-    buildCommand: npm install -g pnpm@10.26.1 && cd backend && pnpm install --frozen-lockfile && pnpm run build
+    buildCommand: cd backend && pnpm install --frozen-lockfile && pnpm run build
     startCommand: cd backend && pnpm run start
     envVars:
       - key: PORT
         value: 10000
       - key: NODE_VERSION
         value: 20.19.0
+      - key: PNPM_VERSION
+        value: "9.12.3"
       - key: FRONTEND_URL
         sync: false
       # Ensure you set these values in your Render Dashboard:
@@ -26,9 +28,11 @@ services:
   - type: web
     env: static
     name: csbs-timetable-frontend
-    buildCommand: npm install -g pnpm@10.26.1 && cd frontend && pnpm install --frozen-lockfile && pnpm run build
+    buildCommand: cd frontend && pnpm install --frozen-lockfile && pnpm run build
     staticPublishPath: frontend/dist
     envVars:
+      - key: PNPM_VERSION
+        value: "9.12.3"
       - key: VITE_API_URL
         sync: false
       # Ensure you set this value in your Render Dashboard:
