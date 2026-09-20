@@ -2,6 +2,7 @@ services:
   - type: web
     name: csbs-timetable-backend
     env: node
+    plan: free
     region: oregon
     buildCommand: cd backend && pnpm install && pnpm run build
     startCommand: cd backend && pnpm run start
