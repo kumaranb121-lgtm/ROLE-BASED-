@@ -12,10 +12,35 @@ export const login = async (request: FastifyRequest, reply: FastifyReply) => {
   }
 
   const queryConditions: any[] = [];
-  if (username) queryConditions.push({ username: username.trim().toLowerCase() });
-  if (email) queryConditions.push({ email: email.trim().toLowerCase() });
+  let userIdentifier = '';
+  if (username) {
+    userIdentifier = username.trim().toLowerCase();
+    queryConditions.push({ username: userIdentifier });
+  }
+  if (email) {
+    userIdentifier = email.trim().toLowerCase();
+    queryConditions.push({ email: userIdentifier });
+  }
 
-  const user = await User.findOne({ $or: queryConditions });
+  let user = await User.findOne({ $or: queryConditions });
+
+  // On-the-fly student creation if it matches pattern (e.g., 111925cw01001)
+  if (!user && userIdentifier.length >= 10 && userIdentifier.startsWith('1119')) {
+    const passwordMatch = password === userIdentifier.slice(-4);
+    if (passwordMatch) {
+      // Create student user
+      const { hashPassword } = await import('../utils/password.js');
+      const hashedPassword = await hashPassword(password);
+      user = await User.create({
+        username: userIdentifier,
+        email: `${userIdentifier}@student.college.edu`,
+        name: `Student ${userIdentifier.toUpperCase()}`,
+        password: hashedPassword,
+        role: 'STUDENT',
+      });
+      console.log('Created student on the fly:', userIdentifier);
+    }
+  }
 
   console.log('Login attempt:', { username, email, foundUser: !!user });
 

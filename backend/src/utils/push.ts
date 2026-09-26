@@ -3,11 +3,19 @@ import { User } from '../models/User.js';
 import dotenv from 'dotenv';
 dotenv.config();
 
-webpush.setVapidDetails(
-  process.env.VAPID_SUBJECT || 'mailto:admin@example.com',
-  process.env.VAPID_PUBLIC_KEY || '',
-  process.env.VAPID_PRIVATE_KEY || ''
-);
+if (process.env.VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) {
+  try {
+    webpush.setVapidDetails(
+      process.env.VAPID_SUBJECT || 'mailto:admin@example.com',
+      process.env.VAPID_PUBLIC_KEY,
+      process.env.VAPID_PRIVATE_KEY
+    );
+  } catch (err) {
+    console.warn('Failed to set VAPID details:', err);
+  }
+} else {
+  console.warn('VAPID keys are missing. Push notifications will be disabled.');
+}
 
 export const sendPushNotification = async (userId: string, payload: { title: string, body: string, url?: string }) => {
   try {

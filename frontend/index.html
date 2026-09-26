@@ -2,12 +2,36 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/jpeg" href="/logo.jpg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Role based timetable management system</title>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Disable right-click
+      document.addEventListener('contextmenu', event => event.preventDefault());
+      
+      // Disable DevTools shortcuts
+      document.addEventListener('keydown', function(e) {
+        if (e.keyCode === 123) { e.preventDefault(); } // F12
+        if (e.ctrlKey && e.shiftKey && e.keyCode === 73) { e.preventDefault(); } // Ctrl+Shift+I
+        if (e.ctrlKey && e.shiftKey && e.keyCode === 74) { e.preventDefault(); } // Ctrl+Shift+J
+        if (e.ctrlKey && e.keyCode === 85) { e.preventDefault(); } // Ctrl+U
+        
+        // Disable Zoom (Ctrl + '+' / '-' / '0')
+        if (e.ctrlKey && (e.key === '+' || e.key === '-' || e.key === '=' || e.key === '0')) {
+          e.preventDefault();
+        }
+      });
+
+      // Disable Zoom via Mouse Wheel
+      document.addEventListener('wheel', function(e) {
+        if (e.ctrlKey) {
+          e.preventDefault();
+        }
+      }, { passive: false });
+    </script>
   </body>
 </html>

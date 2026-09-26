@@ -7,6 +7,8 @@ import api from './services/api';
 import { subscribeToPushNotifications } from './services/pushService';
 import Login from './pages/Login.tsx';
 import DashboardLayout from './layouts/DashboardLayout.tsx';
+import LoadingScreen from './components/LoadingScreen.tsx';
+import { useState } from 'react';
 
 import DashboardRouter from './pages/DashboardRouter.tsx';
 import ClassTimetables from './pages/ClassTimetables.tsx';
@@ -19,12 +21,15 @@ import Leaves from './pages/Leaves.tsx';
 import Attendance from './pages/Attendance.tsx';
 import Reports from './pages/Reports.tsx';
 import MyClass from './pages/MyClass.tsx';
+import MyClassDashboard from './pages/MyClassDashboard.tsx';
+import Notifications from './pages/Notifications.tsx';
 
 const queryClient = new QueryClient();
 
 function App() {
   const { user, token, login, logout } = useAuthStore();
   const { connect } = useSocketStore();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (token) {
@@ -34,9 +39,17 @@ function App() {
         subscribeToPushNotifications();
       }).catch(() => {
         logout();
+      }).finally(() => {
+        setTimeout(() => setIsLoading(false), 4000); // Enforce a 4s loading screen minimum
       });
+    } else {
+      setTimeout(() => setIsLoading(false), 4000);
     }
   }, [token, login, connect, logout]);
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -48,15 +61,16 @@ function App() {
             <Route path="class-timetables" element={<ClassTimetables />} />
             <Route path="timetable" element={<PlaceholderPage title="Department Timetables" />} />
             <Route path="my-timetable" element={<MyTimetable />} />
-            <Route path="my-class" element={<PlaceholderPage title="My Class" />} />
+            <Route path="my-class" element={<MyClassDashboard />} />
+            <Route path="class-students" element={<MyClass />} />
             <Route path="staff-timetables" element={<StaffTimetables />} />
             <Route path="substitutions" element={<Substitutions />} />
             <Route path="leaves" element={<Leaves />} />
-            <Route path="notifications" element={<PlaceholderPage title="Notifications" />} />
+            <Route path="notifications" element={<Notifications />} />
             <Route path="messages" element={<Messages />} />
             <Route path="attendance" element={<Attendance />} />
             <Route path="reports" element={<Reports />} />
-            <Route path="my-class" element={<MyClass />} />
+
           </Route>
         </Routes>
       </BrowserRouter>

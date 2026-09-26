@@ -18,10 +18,10 @@ export const getLeaves = async (request: FastifyRequest, reply: FastifyReply) =>
 };
 
 export const createLeave = async (request: FastifyRequest, reply: FastifyReply) => {
-  const { date, reason } = request.body as any;
+  const { date, reason, proofImage } = request.body as any;
   const user = (request as any).user;
 
-  const leave = new Leave({ staff: user.id, date, reason });
+  const leave = new Leave({ staff: user.id, date, reason, proofImage });
   await leave.save();
 
   const hods = await User.find({ role: 'HOD' });

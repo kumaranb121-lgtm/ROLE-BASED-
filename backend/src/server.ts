@@ -17,15 +17,16 @@ import userRoutes from './routes/userRoutes.js';
 import pushRoutes from './routes/pushRoutes.js';
 import attendanceRoutes from './routes/attendanceRoutes.js';
 import reportRoutes from './routes/reportRoutes.js';
+import eventRoutes from './routes/eventRoutes.js';
 import { initializeSockets } from './sockets/index.js';
 
 dotenv.config();
 
-const app = fastify({ logger: true });
+const app = fastify({ logger: true, bodyLimit: 10485760 }); // 10MB limit
 
 // Middleware
 app.register(cors, {
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  origin: true,
   credentials: true,
 });
 app.register(helmet);
@@ -42,6 +43,7 @@ app.register(messageRoutes, { prefix: '/api/messages' });
 app.register(pushRoutes, { prefix: '/api/push' });
 app.register(attendanceRoutes, { prefix: '/api/attendance' });
 app.register(reportRoutes, { prefix: '/api/reports' });
+app.register(eventRoutes, { prefix: '/api/events' });
 
 const start = async () => {
   try {
@@ -50,7 +52,7 @@ const start = async () => {
     
     const io = new Server(app.server, {
       cors: {
-        origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+        origin: true,
         credentials: true,
       },
     });

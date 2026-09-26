@@ -25,7 +25,7 @@ export default function Sidebar({ isOpen }: { isOpen: boolean }) {
       case 'HOD':
         return [
           { label: 'Dashboard', icon: LayoutDashboard, path: '/' },
-          { label: 'Timetable', icon: CalendarDays, path: '/timetable' },
+          { label: 'My Timetable', icon: CalendarDays, path: '/my-timetable' },
           { label: 'Staff Timetables', icon: Users, path: '/staff-timetables' },
           { label: 'Substitutions', icon: Repeat, path: '/substitutions' },
           { label: 'Leave Requests', icon: FileText, path: '/leaves' },
@@ -42,7 +42,6 @@ export default function Sidebar({ isOpen }: { isOpen: boolean }) {
           { label: 'Substitutions', icon: Repeat, path: '/substitutions' },
           { label: 'Leave Requests', icon: FileText, path: '/leaves' },
           { label: 'Messages', icon: MessageSquare, path: '/messages' },
-          { label: 'Attendance', icon: CheckSquare, path: '/attendance' },
           { label: 'Reports', icon: BarChart3, path: '/reports' },
         ];
       case 'CLASS_REPRESENTATIVE':
@@ -53,6 +52,13 @@ export default function Sidebar({ isOpen }: { isOpen: boolean }) {
           { label: 'Class Students', icon: Users, path: '/class-students' },
           { label: 'Substitution Requests', icon: Repeat, path: '/substitutions' },
           { label: 'Leave Requests', icon: FileText, path: '/leaves' },
+          { label: 'Messages', icon: MessageSquare, path: '/messages' },
+        ];
+      case 'STUDENT':
+        return [
+          { label: 'Dashboard', icon: LayoutDashboard, path: '/' },
+          { label: 'Leave & OD', icon: FileText, path: '/leaves' },
+          { label: 'Notifications', icon: Bell, path: '/notifications' },
           { label: 'Messages', icon: MessageSquare, path: '/messages' },
         ];
       default:
@@ -68,6 +74,8 @@ export default function Sidebar({ isOpen }: { isOpen: boolean }) {
         return ['PLAN TODAY', 'TEACH TOMORROW', 'MAKE A DIFFERENCE'];
       case 'CLASS_REPRESENTATIVE':
         return ['LEARN', 'COORDINATE', 'GROW'];
+      case 'STUDENT':
+        return ['STUDY', 'ACHIEVE', 'SUCCEED'];
       default:
         return ['PLAN', 'COORDINATE', 'GROW'];
     }
@@ -77,13 +85,16 @@ export default function Sidebar({ isOpen }: { isOpen: boolean }) {
   const footerLines = getFooterText();
 
   return (
-    <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-[#4A1115] text-[#FAF6F3] shadow-2xl transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+    <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-[#017a80] text-[#f4f8f3] shadow-2xl transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
       <div className="flex flex-col h-full bg-gradient-to-b from-white/5 to-transparent">
         {/* Logo Area */}
-        <div className="h-24 flex items-center justify-center border-b border-white/5">
-          <span className="font-bold tracking-[0.15em] text-sm uppercase text-[#FAF6F3]">
-            {user?.role === 'HOD' ? 'HOD PANEL' : user?.role === 'STAFF' ? 'STAFF PORTAL' : 'CLASS REP'}
-          </span>
+        <div className="h-24 flex items-center justify-center border-b border-white/5 px-4">
+          <div className="flex items-center gap-3">
+            <img src="/logo.jpg" alt="College Logo" className="w-10 h-10 rounded-full object-cover shadow-sm border border-white/20" />
+            <span className="font-bold tracking-[0.15em] text-sm uppercase text-[#f4f8f3]">
+              {user?.role === 'HOD' ? 'HOD PANEL' : user?.role === 'STAFF' ? 'STAFF PORTAL' : user?.role === 'STUDENT' ? 'STUDENT' : 'CLASS REP'}
+            </span>
+          </div>
         </div>
 
         {/* Navigation */}
@@ -95,8 +106,8 @@ export default function Sidebar({ isOpen }: { isOpen: boolean }) {
               className={({ isActive }) =>
                 `flex items-center gap-4 px-5 py-3.5 rounded-xl text-sm font-medium transition-all duration-200 ${
                   isActive 
-                    ? 'bg-[#632220] text-[#FAF6F3] shadow-md shadow-black/10' 
-                    : 'text-[#FAF6F3]/60 hover:bg-[#632220]/50 hover:text-[#FAF6F3]'
+                    ? 'bg-[#015a60] text-[#f4f8f3] shadow-md shadow-black/10' 
+                    : 'text-[#f4f8f3]/60 hover:bg-[#015a60]/50 hover:text-[#f4f8f3]'
                 }`
               }
             >
@@ -110,14 +121,14 @@ export default function Sidebar({ isOpen }: { isOpen: boolean }) {
         <div className="p-8 mt-auto pb-10">
           <button 
             onClick={logout}
-            className="flex items-center gap-3 text-[#FAF6F3]/50 hover:text-[#FAF6F3] mb-8 text-sm font-medium transition-colors w-full"
+            className="flex items-center gap-3 text-[#f4f8f3]/50 hover:text-[#f4f8f3] mb-8 text-sm font-medium transition-colors w-full"
           >
             <LogOut className="w-5 h-5 stroke-[1.5]" />
             Logout
           </button>
           
           <div className="h-0.5 bg-white/10 w-8 mb-5 rounded-full" />
-          <div className="text-[10px] font-bold tracking-[0.2em] text-[#FAF6F3]/40 space-y-2 uppercase">
+          <div className="text-[10px] font-bold tracking-[0.2em] text-[#f4f8f3]/40 space-y-2 uppercase">
             {footerLines.map(line => (
               <p key={line}>{line}</p>
             ))}

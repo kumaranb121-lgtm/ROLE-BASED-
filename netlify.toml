@@ -1,0 +1,10 @@
+[build]
+  base = "frontend"
+  publish = "dist"
+  command = "pnpm run build"
+
+# For SPAs (Single Page Applications) to support client-side routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
